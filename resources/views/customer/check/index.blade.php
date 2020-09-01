@@ -5,6 +5,6 @@
     {!! Form::open(["action" => ["CheckCustIdController@store"], "method" => "POST"]) !!}
         {{Form::label("title", "Customer Name")}}
         {{Form::text("custName", "", ["class" => "form-control", "Placeholder" => "Customer Name"])}}
-        {{Form::submit('Check!')}}
+        {{Form::submit("Check!", ["class" => "btn btn-primary"])}}
     {!! Form::close() !!}
 @endsection
