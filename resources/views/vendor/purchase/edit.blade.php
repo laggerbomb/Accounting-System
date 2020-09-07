@@ -44,7 +44,8 @@
             <th>
                 <div class="form-group">
                     {{Form::label("title", "Vendor Name")}}
-                    {{Form::text("vendorId", $invoice->vendorId, ["id" => "vendorId", "class" => "form-control", "Placeholder" => "Name"])}}
+                    {{Form::text("companyName",  $company->companyName, [ "id" => "vendorName","class" => "form-control", "Placeholder" => "Name", "disabled"])}}
+
                 </div>
             </th>
             <th>
