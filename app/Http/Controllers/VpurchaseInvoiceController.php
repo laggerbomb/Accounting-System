@@ -51,9 +51,11 @@ class VpurchaseInvoiceController extends Controller
         $user_id = auth()->user()->id;
         $invoice = DB::table('invoice')->where('user_id', $user_id)->get();
         $inv = count($invoice) +1;
+        $company = DB::table('company')->where('companyName', $request->input('vendorName'))->first();
         
         $post = new Vinvoice;
-        $post->vendorId = $request->input("vendorName");
+        $post->vendorId = $company->companyCode;
+        //$post->vendorId = $request->input("vendorName");
         $post->date = $request->input("invDate");
         $post->invId = $inv;
         $post->payment = 0;
@@ -97,13 +99,15 @@ class VpurchaseInvoiceController extends Controller
     public function edit($id)
     {
         $invoice = Vinvoice::find($id);
+        $company = DB::table('company')->where('companyCode', $invoice->custId)->first();
         $purchaseInvoice = DB::table('purchasedetails')->where('user_id', $invoice->user_id)
                                                  ->where('invId', $invoice->invId)
                                                  ->get();
 
         $data = array(
             "invoice" => $invoice,
-            "purchaseInvoice" => $purchaseInvoice
+            "purchaseInvoice" => $purchaseInvoice,
+            "company" => $company
         ); 
 
         return view("/vendor/purchase.edit")->with($data);    }

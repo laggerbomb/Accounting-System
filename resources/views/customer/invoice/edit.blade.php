@@ -44,7 +44,7 @@
             <th>
                 <div class="form-group">
                     {{Form::label("title", "Customer Name")}}
-                    {{Form::text("custName", $invoice->custName, ["id" => "custName", "class" => "form-control", "Placeholder" => "Name"])}}
+                    {{Form::text("companyName", $company->companyName, ["id" => "companyName", "class" => "form-control", "Placeholder" => "Name"])}}
                 </div>
             </th>
             <th>
