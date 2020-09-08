@@ -35,7 +35,21 @@
       });
   });
 
-</script>
+  function calcGrantTotal()
+  {
+    var count = <?php echo count($orderInvoice) - 1; ?>;
+    var index;
+    for(index = 0; index <= count; index++)
+    {
+      var weight = document.getElementById("productWeight[" + index + "]").value;
+      var quantity = document.getElementById("productQty[" + index + "]").value;
+      var cost = document.getElementById("productCost[" + index + "]").value;
+      var productMkg = document.getElementById("productMkg[" + index + "]").value;
+      document.getElementById("productTotal[" + index + "]").value = ((weight*quantity-productMkg)*cost).toFixed(2);
+    }
+  }
+  window.onload = calcGrantTotal;
+  </script>
 
 {!! Form::open(["action" => ["CinvoiceController@update", $invoice->id], "method" => "POST", "id" => "form1", "name" => "form1"]) !!}
     <table class="table">
@@ -82,12 +96,12 @@
           @for ($i = 0; $i < count($orderInvoice); $i++)
             <tr>
                 <th>{{Form::text("productName[".$i."]", $orderInvoice[$i]->productName, ["class" => "form-control", "Placeholder" => "Name"])}}</th>
-                <th>{{Form::text("productWeight[".$i."]", $orderInvoice[$i]->productWeight, ["class" => "form-control", "Placeholder" => "kg"])}}</th>
-                <th>{{Form::number("productQty[".$i."]", $orderInvoice[$i]->productQty, ["class" => "form-control", "Placeholder" => "box", "min" => "1"])}}</th>
-                <th>{{Form::text("productCost[".$i."]", $orderInvoice[$i]->productCost, ["class" => "form-control", "Placeholder" => "RM"])}}</th>
-                <th>{{Form::text("productMkg[".$i."]", $orderInvoice[$i]->productMkg, ["class" => "form-control", "Placeholder" => "-Kg"])}}</th>
+                <th>{{Form::text("productWeight[".$i."]", $orderInvoice[$i]->productWeight, ["id" => "productWeight[$i]", "class" => "form-control", "Placeholder" => "kg"])}}</th>
+                <th>{{Form::number("productQty[".$i."]", $orderInvoice[$i]->productQty, ["id" => "productQty[$i]", "class" => "form-control", "Placeholder" => "box", "min" => "1"])}}</th>
+                <th>{{Form::text("productCost[".$i."]", $orderInvoice[$i]->productCost, ["id" => "productCost[$i]", "class" => "form-control", "Placeholder" => "RM"])}}</th>
+                <th>{{Form::text("productMkg[".$i."]", $orderInvoice[$i]->productMkg, ["id" => "productMkg[$i]", "class" => "form-control", "Placeholder" => "-Kg"])}}</th>
                 <th>{{Form::text("productRemarks[".$i."]", $orderInvoice[$i]->productRemarks, ["class" => "form-control", "Placeholder" => "Remarks"])}}</th>
-                <th>{{Form::text("productTotal[".$i."]", "", ["class" => "form-control"])}}</th>
+                <th>{{Form::text("productTotal[".$i."]", "", ["id" => "productTotal[$i]", "class" => "form-control", "onload" => "calcGrantTotal()"])}}</th>
                 @if ($i == 0)
                     <th><button type="button" class="btn btn-info add-new">Add</button></th>
                 @else
