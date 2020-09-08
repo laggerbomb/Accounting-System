@@ -11,7 +11,7 @@
     // Append table with add row form on add new button click
       $(".add-new").click(function(){
       count++;
-      alert(count);
+      //alert(count);
       var index = $("table tbody tr:last-child").index();
           var row = '<tr>' +
             '<th><input type = "text" name="productName[' + count +'] " class="form-control" placeholder="Name"></input></th>' +
