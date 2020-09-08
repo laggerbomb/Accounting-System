@@ -135,7 +135,8 @@ class CinvoiceController extends Controller
     {   
         
         $post = Cinvoice::find($id);
-        $post->custName = $request->input("custName");
+        $company = DB::table('company')->where('companyName', $request->input("companyName"))->first();
+        $post->custId = $company->companyCode;
         $post->invDate = $request->input("invDate");
         $post->save();
 
