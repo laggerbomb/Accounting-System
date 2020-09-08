@@ -99,7 +99,7 @@ class VpurchaseInvoiceController extends Controller
     public function edit($id)
     {
         $invoice = Vinvoice::find($id);
-        $company = DB::table('company')->where('companyCode', $invoice->custId)->first();
+        $company = DB::table('company')->where('companyCode', $invoice->vendorId)->first();
         $purchaseInvoice = DB::table('purchasedetails')->where('user_id', $invoice->user_id)
                                                  ->where('invId', $invoice->invId)
                                                  ->get();
