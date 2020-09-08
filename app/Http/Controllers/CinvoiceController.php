@@ -63,16 +63,16 @@ class CinvoiceController extends Controller
         $user_id = auth()->user()->id;
         $invoice = DB::table('invoice')->where('user_id', $user_id)->get();
         $inv = count($invoice) +1;
-        
+        $company = DB::table('company')->where('companyName', $request->input('custName'))->first();
+
         $post = new Cinvoice;
-        $post->custName = $request->input("custName");
+        $post->custId = $company->companyCode;
         $post->invDate = $request->input("invDate");
         $post->invId = $inv;
         $post->payment = 0;
         $post->user_id = auth()->user()->id;
         $post->total = $request->input("total");
         $post->save();
-        
         for($count = 0; $count < count($request->productName); $count++)
         {
             DB::table('orderinvoice')->insert([
@@ -110,13 +110,15 @@ class CinvoiceController extends Controller
     public function edit($id)
     {
         $invoice = Cinvoice::find($id);
+        $company = DB::table('company')->where('companyCode', $invoice->custId)->first();
         $orderInvoice = DB::table('orderInvoice')->where('user_id', $invoice->user_id)
                                                  ->where('invId', $invoice->invId)
                                                  ->get();
 
         $data = array(
             "invoice" => $invoice,
-            "orderInvoice" => $orderInvoice
+            "orderInvoice" => $orderInvoice,
+            "company" => $company
         ); 
 
         return view("/customer/invoice.edit")->with($data);
